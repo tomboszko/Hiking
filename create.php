@@ -1,23 +1,39 @@
 <?php
+$distanceError = $heightDifferenceError = $durationError = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Connect to the database
     $db = new PDO('mysql:host=localhost;dbname=becode;charset=utf8', 'toms', 'root');
 
-    // Prepare the SQL statement
-    $stmt = $db->prepare('INSERT INTO hiking (name, difficulty, distance, duration, height_difference) VALUES (?, ?, ?, ?, ?)');
+    // Check if distance, height_difference and duration are numbers
+    if (!is_numeric($_POST['distance'])) {
+        $distanceError = "Distance must be a number.";
+    }
+    if (!is_numeric($_POST['height_difference'])) {
+        $heightDifferenceError = "Height difference must be a number.";
+    }
+    if (!is_numeric($_POST['duration'])) {
+        $durationError = "Duration must be a number.";
+    }
 
-    // Execute the statement with form data
-    $stmt->execute([
-        $_POST['name'],
-        $_POST['difficulty'],
-        $_POST['distance'],
-        $_POST['duration'],
-        $_POST['height_difference']
-    ]);
+    if ($distanceError == '' && $heightDifferenceError == '' && $durationError == '') {
+        // Prepare the SQL statement
+        $stmt = $db->prepare('INSERT INTO hiking (name, difficulty, distance, duration, height_difference) VALUES (?, ?, ?, ?, ?)');
 
-    echo "La randonnée a été ajoutée avec succès.";
+        // Execute the statement with form data
+        $stmt->execute([
+            $_POST['name'],
+            $_POST['difficulty'],
+            $_POST['distance'],
+            $_POST['duration'],
+            $_POST['height_difference']
+        ]);
+
+        echo "La randonnée a été ajoutée avec succès.";
+    }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -50,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-	<a href="/php-pdo/read.php">Liste des données</a>
+	<a href="/Hiking/read.php">Liste des données</a>
 	<h1>Ajouter</h1>
 	<form action="" method="post">
 		<div>

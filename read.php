@@ -39,14 +39,17 @@
       // Fetch the data and display it
       while ($row = $result->fetch()) {
         echo '<tr>';
-        echo '<td>' . $row['name'] . '</td>';
+        echo '<td><a href="update.php?id=' . $row['id'] . '">' . $row['name'] . '</a></td>';
         echo '<td>' . $row['difficulty'] . '</td>';
         echo '<td>' . $row['distance'] . '</td>';
         echo '<td>' . $row['duration'] . '</td>';
         echo '<td>' . $row['height_difference'] . '</td>';
+        echo '<td><a href="delete.php?id=' . $row['id'] . '">Delete</a></td>';
         echo '</tr>';
-      }
+    }
       ?>
+
+      
     </table>
   </body>
 </html>
