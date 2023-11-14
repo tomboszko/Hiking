@@ -1,9 +1,53 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Connect to the database
+    $db = new PDO('mysql:host=localhost;dbname=becode;charset=utf8', 'toms', 'root');
+
+    // Prepare the SQL statement
+    $stmt = $db->prepare('INSERT INTO hiking (name, difficulty, distance, duration, height_difference) VALUES (?, ?, ?, ?, ?)');
+
+    // Execute the statement with form data
+    $stmt->execute([
+        $_POST['name'],
+        $_POST['difficulty'],
+        $_POST['distance'],
+        $_POST['duration'],
+        $_POST['height_difference']
+    ]);
+
+    echo "La randonnée a été ajoutée avec succès.";
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<title>Ajouter une randonnée</title>
 	<link rel="stylesheet" href="css/basics.css" media="screen" title="no title" charset="utf-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+        }
+    </style>
 </head>
 <body>
 	<a href="/php-pdo/read.php">Liste des données</a>
