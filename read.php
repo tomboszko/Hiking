@@ -30,6 +30,12 @@
         <th>Dénivelé</th>
       </tr>
       <?php
+      session_start();
+
+      if (!isset($_SESSION['username'])) {
+        header('Location: login.php');
+        exit;
+    }
       // Connect to the database
       $db = new PDO('mysql:host=localhost;dbname=becode;charset=utf8', 'toms', 'root');
 

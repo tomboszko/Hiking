@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header('Location: login.php');
+    exit;
+}
 $distanceError = $heightDifferenceError = $durationError = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
